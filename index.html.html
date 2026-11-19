@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1° Compleanno di Giacomo | Invito Giungla a Palermo 🦁</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jungle: {
+                            50: '#f0f9f1',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            400: '#4ade80',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            dark: '#082312'
+                        },
+                        safari: {
+                            gold: '#FFB703',
+                            orange: '#FB8500',
+                            sand: '#FEFAE0',
+                            cream: '#FFFDF0',
+                            earth: '#D4A373',
+                            terracotta: '#E07A5F'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-subtle': 'pulseSubtle 2s ease-in-out infinite',
+                        'float-leaf': 'floatLeaf 6s ease-in-out infinite',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                    },
+                    keyframes: {
+                        pulseSubtle: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.04)' }
+                        },
+                        floatLeaf: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(6deg)' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-6px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(180deg, #E8F5E9 0%, #FEFAE0 50%, #E8F5E9 100%);
+            color: #14532d;
+            overflow-x: hidden;
+        }
+
+        .heading-font {
+            font-family: 'Fredoka', cursive;
+        }
+
+        .jungle-bg-pattern {
+            background-image: radial-gradient(#15803d 0.8px, transparent 0.8px), radial-gradient(#fb8500 0.8px, #e8f5e9 0.8px);
+            background-size: 36px 36px;
+            background-position: 0 0, 18px 18px;
+            opacity: 0.12;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 16px 40px -10px rgba(20, 83, 45, 0.15);
+        }
+
+        /* 3D ENVELOPE STYLES */
+        #envelope-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: radial-gradient(circle at center, #1e5631 0%, #0d381e 50%, #051a0d 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            overflow: hidden;
+        }
+
+        .jungle-envelope-bg {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(30, 86, 49, 0.45) 0%, rgba(5, 26, 13, 0.9) 100%),
+                url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2322c55e' fill-opacity='0.08'%3E%3Cpath d='M80 15 C 95 45, 125 55, 150 55 C 125 85, 110 115, 110 150 C 80 125, 50 125, 10 150 C 40 115, 25 85, 10 55 C 35 55, 65 45, 80 15 Z'/%3E%3Cpath d='M30 20 C 40 35, 55 40, 70 40 C 55 55, 50 70, 50 90 C 35 75, 20 75, 5 90 C 20 70, 10 55, 5 40 C 20 40, 25 35, 30 20 Z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: #D4A373;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        @media (min-width: 640px) {
+            .envelope-container {
+                width: 380px;
+                height: 260px;
+            }
+        }
+
+        /* Envelope Inner Pocket */
+        .envelope-back {
+            position: absolute;
+            inset: 0;
+            background: #c38e5d;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Invitation Card inside Envelope */
+        .envelope-card {
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            bottom: 10px;
+            height: 90%;
+            background: #FFFDF0;
+            border-radius: 12px;
+            border: 2px solid #FFB703;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+
+        /* Envelope Front Flaps */
+        .envelope-front-left {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(0 0, 0 100%, 50% 50%);
+            background: #dca776;
+            border-bottom-left-radius: 16px;
+            border-top-left-radius: 16px;
+            z-index: 3;
+        }
+
+        .envelope-front-right {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+            background: #dca776;
+            border-bottom-right-radius: 16px;
+            border-top-right-radius: 16px;
+            z-index: 3;
+        }
+
+        .envelope-front-bottom {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(0 100%, 100% 100%, 50% 45%);
+            background: #c79463;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 4;
+        }
+
+        /* Top Opening Flap */
+        .envelope-top-flap {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(0 0, 100% 0, 50% 55%);
+            background: #e5b382;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            transform-origin: top center;
+            transition: transform 0.7s ease-in-out, z-index 0.3s ease 0.3s;
+            z-index: 5;
+        }
+
+        /* Wax Seal Lion Stamp */
+        .wax-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -30%);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FFB703 0%, #FB8500 100%);
+            border: 4px solid #FFFDF0;
+            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 6;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Opening States */
+        .envelope-container.open .envelope-top-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-container.open .wax-seal {
+            transform: translate(-50%, -30%) scale(0);
+            opacity: 0;
+        }
+
+        .envelope-container.open .envelope-card {
+            transform: translateY(-130px) scale(1.03);
+            z-index: 7;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FEFAE0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #15803d;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen pb-16 selection:bg-safari-gold selection:text-jungle-900">
+
+    <!-- DYNAMIC BACKGROUND PATTERN -->
+    <div class="fixed inset-0 jungle-bg-pattern pointer-events-none"></div>
+
+    <!-- FLOATING DECORATIVE TROPICAL LEAVES -->
+    <div class="fixed top-10 left-4 text-3xl sm:text-4xl opacity-50 pointer-events-none animate-float-leaf">🌿</div>
+    <div class="fixed top-1/3 right-4 text-3xl sm:text-4xl opacity-50 pointer-events-none animate-float-leaf" style="animation-delay: 1.5s;">🌴</div>
+    <div class="fixed top-2/3 left-6 text-3xl sm:text-4xl opacity-40 pointer-events-none animate-float-leaf" style="animation-delay: 3s;">🥭</div>
+    <div class="fixed bottom-12 right-6 text-3xl sm:text-4xl opacity-50 pointer-events-none animate-float-leaf" style="animation-delay: 2s;">🌺</div>
+
+    <!-- ================================================================= -->
+    <!-- INTERACTIVE FULL-SCREEN ENVELOPE OVERLAY -->
+    <!-- ================================================================= -->
+    <div id="envelope-screen" onclick="openEnvelopeAnimation()">
+        
+        <!-- JUNGLE BACKGROUND LAYER & TROPICAL LEAF DECORATIONS -->
+        <div class="jungle-envelope-bg"></div>
+
+        <!-- Floating Decorative Jungle SVG Elements & Foliage -->
+        <div class="absolute -top-4 -left-4 text-7xl sm:text-8xl opacity-85 pointer-events-none animate-float-leaf" style="animation-duration: 7s;">🌿</div>
+        <div class="absolute top-6 left-1/4 text-5xl sm:text-6xl opacity-75 pointer-events-none animate-float-leaf" style="animation-duration: 9s; animation-delay: 1s;">🌴</div>
+        <div class="absolute -top-4 -right-4 text-7xl sm:text-8xl opacity-85 pointer-events-none animate-float-leaf" style="animation-duration: 8s; animation-delay: 2s;">🍃</div>
+        <div class="absolute top-12 right-1/4 text-5xl sm:text-6xl opacity-75 pointer-events-none animate-float-leaf" style="animation-duration: 6.5s; animation-delay: 0.5s;">🌱</div>
+        <div class="absolute bottom-6 left-4 text-7xl sm:text-8xl opacity-85 pointer-events-none animate-float-leaf" style="animation-duration: 8.5s; animation-delay: 1.5s;">🌴</div>
+        <div class="absolute -bottom-4 -right-4 text-8xl sm:text-9xl opacity-90 pointer-events-none animate-float-leaf" style="animation-duration: 7.5s; animation-delay: 3s;">🌿</div>
+
+        <!-- Lush Corner Monstera & Jungle Foliage Overlays -->
+        <svg class="absolute top-0 left-0 w-44 h-44 text-emerald-500/25 pointer-events-none" viewBox="0 0 100 100" fill="currentColor">
+            <path d="M0,0 C35,25 70,15 95,0 C75,45 85,75 100,100 C65,85 35,95 0,100 Z"/>
+        </svg>
+        <svg class="absolute bottom-0 right-0 w-52 h-52 text-emerald-400/20 pointer-events-none transform rotate-180" viewBox="0 0 100 100" fill="currentColor">
+            <path d="M0,0 C35,25 70,15 95,0 C75,45 85,75 100,100 C65,85 35,95 0,100 Z"/>
+        </svg>
+
+        <!-- Header Text -->
+        <div class="text-center mb-8 space-y-2 relative z-10">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-safari-gold/20 border border-safari-gold text-safari-gold text-xs sm:text-sm font-bold uppercase tracking-wider animate-pulse-subtle backdrop-blur-sm">
+                🌴 Un'avventura speciale vi attende 🌴
+            </span>
+            <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-white tracking-wide drop-shadow-md">
+                Invito di Compleanno
+            </h2>
+            <p class="text-emerald-200 text-sm font-semibold drop-shadow">
+                Tocca la busta per scoprire i dettagli della festa! ✨
+            </p>
+        </div>
+
+        <!-- Envelope 3D Element -->
+        <div id="envelope-box" class="envelope-container animate-pulse-subtle">
+            <!-- Back Pocket -->
+            <div class="envelope-back"></div>
+            
+            <!-- Card Inside -->
+            <div class="envelope-card">
+                <span class="text-4xl mb-1">🦁</span>
+                <span class="heading-font font-bold text-xs text-safari-orange uppercase tracking-wider">Sei invitato!</span>
+                <h3 class="heading-font text-xl font-extrabold text-jungle-900 leading-tight mt-0.5">1° Compleanno di Giacomo</h3>
+                <p class="text-[11px] text-jungle-700 font-bold mt-1">Domenica 10 Gennaio 2027 • Palermo</p>
+            </div>
+
+            <!-- Front Flaps -->
+            <div class="envelope-front-left"></div>
+            <div class="envelope-front-right"></div>
+            <div class="envelope-front-bottom"></div>
+            <div class="envelope-top-flap"></div>
+
+            <!-- Wax Seal Button -->
+            <div class="wax-seal">
+                🦁
+            </div>
+        </div>
+
+        <!-- Action Hint Button -->
+        <button class="mt-10 px-8 py-3 bg-gradient-to-r from-safari-gold to-safari-orange text-jungle-900 font-extrabold text-sm sm:text-base rounded-full shadow-2xl flex items-center gap-2 animate-bounce-gentle border-2 border-white">
+            <span>✉️</span>
+            <span>Tocca qui per aprire l'invito</span>
+        </button>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- MAIN INVITATION CONTENT (REVEALED AFTER ENVELOPE OPENS) -->
+    <!-- ================================================================= -->
+    <main id="main-content" class="max-w-xl mx-auto px-4 pt-8 space-y-8 relative z-10">
+
+        <!-- HERO / HEADER SECTION -->
+        <header class="text-center relative">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-safari-gold/25 border border-safari-gold text-jungle-900 text-xs sm:text-sm font-bold mb-3 shadow-sm">
+                <span>🌴</span>
+                <span>FESTA NELLA GIUNGLA A PALERMO</span>
+                <span>🌴</span>
+            </div>
+
+            <!-- Main Invitation Card -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center border-4 border-jungle-600/30 shadow-2xl relative overflow-hidden">
+                <!-- Decorative Glows -->
+                <div class="absolute -top-10 -right-10 w-36 h-36 bg-safari-gold/20 rounded-full blur-xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-jungle-600/15 rounded-full blur-xl pointer-events-none"></div>
+                
+                <!-- Lion & Age Badge -->
+                <div class="relative z-10 mb-3 flex justify-center items-center gap-3">
+                    <span class="text-6xl sm:text-7xl animate-bounce-gentle">🦁</span>
+                    <div class="bg-gradient-to-r from-safari-gold via-safari-orange to-safari-terracotta text-white heading-font text-5xl sm:text-6xl font-extrabold px-6 py-2 rounded-2xl shadow-lg transform -rotate-3 border-2 border-white">
+                        1°
+                    </div>
+                </div>
+
+                <h2 class="heading-font text-xl sm:text-2xl text-jungle-800 tracking-wide uppercase mt-1">
+                    IL MIO PRIMO COMPLEANNO
+                </h2>
+                
+                <h1 class="heading-font text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-jungle-900 via-jungle-700 to-safari-orange py-1">
+                    GIACOMO
+                </h1>
+
+                <p class="mt-3 text-jungle-800 font-semibold text-base sm:text-lg max-w-xs mx-auto leading-relaxed">
+                    Un anno di ruggiti, sorrisi ed esplorazioni! Ti aspetto per festeggiare insieme questa magica giornata! 🎉
+                </p>
+
+                <!-- Date & City Badge -->
+                <div class="mt-6 flex flex-col items-center justify-center gap-1.5 bg-jungle-900 text-white px-5 py-4 rounded-2xl shadow-xl w-full border border-jungle-700">
+                    <div class="flex items-center gap-2 text-safari-gold font-extrabold text-lg sm:text-xl">
+                        <span>📅</span>
+                        <span>Domenica 10 Gennaio 2027</span>
+                    </div>
+                    <div class="text-sm font-bold text-emerald-200 flex items-center gap-2">
+                        <span>⏰ Ore 16:00</span>
+                        <span>•</span>
+                        <span>📍 Palermo</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- COUNTDOWN TIMER SECTION -->
+        <section class="glass-card rounded-3xl p-6 text-center shadow-lg border-2 border-jungle-600/20">
+            <h3 class="heading-font text-lg sm:text-xl font-bold text-jungle-900 mb-4 flex items-center justify-center gap-2">
+                <span>⏳</span> Quanto manca al grande giorno?
+            </h3>
+            
+            <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-3">
+                <div class="bg-gradient-to-b from-jungle-800 to-jungle-900 text-white p-3 rounded-2xl shadow-inner border border-jungle-700">
+                    <span id="cd-days" class="heading-font text-2xl sm:text-3xl font-extrabold text-safari-gold block">00</span>
+                    <span class="text-[10px] sm:text-xs text-emerald-200 uppercase font-bold tracking-wider">Giorni</span>
+                </div>
+                <div class="bg-gradient-to-b from-jungle-800 to-jungle-900 text-white p-3 rounded-2xl shadow-inner border border-jungle-700">
+                    <span id="cd-hours" class="heading-font text-2xl sm:text-3xl font-extrabold text-safari-gold block">00</span>
+                    <span class="text-[10px] sm:text-xs text-emerald-200 uppercase font-bold tracking-wider">Ore</span>
+                </div>
+                <div class="bg-gradient-to-b from-jungle-800 to-jungle-900 text-white p-3 rounded-2xl shadow-inner border border-jungle-700">
+                    <span id="cd-minutes" class="heading-font text-2xl sm:text-3xl font-extrabold text-safari-gold block">00</span>
+                    <span class="text-[10px] sm:text-xs text-emerald-200 uppercase font-bold tracking-wider">Minuti</span>
+                </div>
+                <div class="bg-gradient-to-b from-jungle-800 to-jungle-900 text-white p-3 rounded-2xl shadow-inner border border-jungle-700">
+                    <span id="cd-seconds" class="heading-font text-2xl sm:text-3xl font-extrabold text-safari-orange block animate-pulse">00</span>
+                    <span class="text-[10px] sm:text-xs text-emerald-200 uppercase font-bold tracking-wider">Secondi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION & PROGRAM SECTION (PALERMO) -->
+        <section class="glass-card rounded-3xl p-6 sm:p-7 shadow-lg space-y-5 border-2 border-safari-gold/50">
+            <div class="flex items-center gap-3 border-b border-jungle-100 pb-3">
+                <div class="w-12 h-12 rounded-2xl bg-safari-gold/25 flex items-center justify-center text-2xl border border-safari-gold text-safari-orange font-bold">
+                    📍
+                </div>
+                <div>
+                    <h3 class="heading-font text-xl font-bold text-jungle-900">Dove si terrà la Festa?</h3>
+                    <p class="text-xs text-jungle-600 font-semibold">Città di Palermo</p>
+                </div>
+            </div>
+
+            <!-- Location Status Box -->
+            <div class="bg-amber-50/90 border-2 border-amber-300 rounded-2xl p-4 space-y-2">
+                <div class="flex items-start gap-3">
+                    <span class="text-3xl">🏛️</span>
+                    <div>
+                        <h4 class="font-extrabold text-amber-900 text-base">Palermo</h4>
+                        <p class="text-xs sm:text-sm text-amber-800 font-bold mt-0.5">
+                            📍 Location in corso di definizione!
+                        </p>
+                        <p class="text-xs text-amber-700 mt-1 leading-relaxed font-medium">
+                            Stiamo scegliendo la location ideale a Palermo per accogliere tutti gli invitati. Vi invieremo l'indirizzo esatto non appena confermato!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Schedule -->
+            <div class="bg-jungle-50/90 p-4 rounded-2xl border border-jungle-200/80 space-y-2">
+                <h4 class="font-bold text-jungle-900 text-sm flex items-center gap-2">
+                    <span>🎂</span> Programma indicativo:
+                </h4>
+                <ul class="text-xs text-jungle-800 font-semibold space-y-1.5 pl-6 list-disc">
+                    <li><strong>16:00</strong> - Benvenuto nel Regno della Giungla & Accoglienza</li>
+                    <li><strong>17:30</strong> - Merenda, Torta di Compleanno e Soffio della 1ª Candelina! 🎂</li>
+                    <li><strong>18:30</strong> - Foto ricordo & Consegna dei regalini</li>
+                </ul>
+            </div>
+
+            <!-- Action Button: Add to Calendar -->
+            <button onclick="openCalendarModal()"
+                    class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-safari-orange to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-extrabold py-3.5 px-4 rounded-2xl shadow-md transition transform active:scale-95 text-sm">
+                <span>📅</span>
+                <span>Salva l'evento nel tuo Calendario</span>
+            </button>
+        </section>
+
+        <!-- RSVP FORM SECTION -->
+        <section id="rsvp-section" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-jungle-600/30">
+            <div class="text-center mb-6">
+                <div class="inline-block p-3 rounded-full bg-jungle-600 text-white text-3xl mb-2 shadow-md">
+                    💌
+                </div>
+                <h3 class="heading-font text-2xl sm:text-3xl font-extrabold text-jungle-900">Conferma la Tua Presenza</h3>
+                <p class="text-xs sm:text-sm text-jungle-700 font-semibold mt-1">
+                    Ti preghiamo di confermare entro il <span class="underline decoration-safari-gold font-bold">28 Dicembre 2026</span>
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form id="rsvp-form" class="space-y-4" onsubmit="handleRSVPSubmit(event)">
+                <!-- Name -->
+                <div>
+                    <label class="block text-xs font-bold text-jungle-900 mb-1">Nome e Cognome *</label>
+                    <input type="text" id="rsvp-name" required placeholder="Es. Famiglia Rossi / Elena e Marco"
+                           class="w-full px-4 py-3 rounded-2xl border-2 border-jungle-200 focus:border-jungle-600 focus:outline-none bg-white font-medium text-sm text-jungle-900">
+                </div>
+
+                <!-- Status Buttons -->
+                <div>
+                    <label class="block text-xs font-bold text-jungle-900 mb-2">Parteciperai alla festa? *</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label id="label-attending" class="flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-emerald-400 bg-emerald-50 cursor-pointer font-bold text-xs sm:text-sm text-emerald-800 transition active:scale-95">
+                            <input type="radio" name="rsvp-status" value="attending" checked onchange="toggleGuestCounters(true)" class="accent-emerald-600 w-4 h-4">
+                            <span>Parteciperò con gioia! 🎉</span>
+                        </label>
+                        <label id="label-declined" class="flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-gray-200 bg-gray-50 cursor-pointer font-bold text-xs sm:text-sm text-gray-600 transition active:scale-95">
+                            <input type="radio" name="rsvp-status" value="declined" onchange="toggleGuestCounters(false)" class="accent-gray-600 w-4 h-4">
+                            <span>Non potrò esserci 😢</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Guests Counter Container -->
+                <div id="guests-counter-box" class="grid grid-cols-2 gap-3 bg-jungle-50/80 p-4 rounded-2xl border border-jungle-200">
+                    <div>
+                        <label class="block text-xs font-bold text-jungle-800 mb-1">Adulti</label>
+                        <div class="flex items-center bg-white rounded-xl border border-jungle-300 p-1">
+                            <button type="button" onclick="adjustCount('adults', -1)" class="w-8 h-8 rounded-lg bg-jungle-100 text-jungle-800 font-bold hover:bg-jungle-200">-</button>
+                            <input type="number" id="count-adults" value="1" min="1" max="10" readonly class="w-full text-center font-bold text-jungle-900 focus:outline-none">
+                            <button type="button" onclick="adjustCount('adults', 1)" class="w-8 h-8 rounded-lg bg-jungle-100 text-jungle-800 font-bold hover:bg-jungle-200">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-jungle-800 mb-1">Bambini</label>
+                        <div class="flex items-center bg-white rounded-xl border border-jungle-300 p-1">
+                            <button type="button" onclick="adjustCount('kids', -1)" class="w-8 h-8 rounded-lg bg-jungle-100 text-jungle-800 font-bold hover:bg-jungle-200">-</button>
+                            <input type="number" id="count-kids" value="0" min="0" max="10" readonly class="w-full text-center font-bold text-jungle-900 focus:outline-none">
+                            <button type="button" onclick="adjustCount('kids', 1)" class="w-8 h-8 rounded-lg bg-jungle-100 text-jungle-800 font-bold hover:bg-jungle-200">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dietary / Allergies -->
+                <div>
+                    <label class="block text-xs font-bold text-jungle-900 mb-1">Allergie, intolleranze o note particolari</label>
+                    <textarea id="rsvp-notes" rows="2" placeholder="Es. 1 vegetariano, allergia al lattosio..."
+                              class="w-full px-4 py-2.5 rounded-2xl border-2 border-jungle-200 focus:border-jungle-600 focus:outline-none bg-white font-medium text-xs sm:text-sm text-jungle-900"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="rsvp-submit-btn"
+                        class="w-full py-4 bg-gradient-to-r from-jungle-600 to-emerald-700 hover:from-jungle-700 hover:to-emerald-800 text-white font-extrabold text-base rounded-2xl shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <span>🚀</span>
+                    <span>Invia la tua risposta</span>
+                </button>
+            </form>
+
+            <!-- Real-Time RSVP Stats Counter Badge -->
+            <div class="mt-6 pt-4 border-t border-jungle-100 flex items-center justify-around text-center text-xs text-jungle-800 font-bold">
+                <div>
+                    <span id="stat-rsvps" class="block text-lg font-black text-jungle-700">0</span>
+                    <span>Risposte</span>
+                </div>
+                <div class="h-6 w-px bg-jungle-200"></div>
+                <div>
+                    <span id="stat-adults" class="block text-lg font-black text-emerald-600">0</span>
+                    <span>Adulti</span>
+                </div>
+                <div class="h-6 w-px bg-jungle-200"></div>
+                <div>
+                    <span id="stat-kids" class="block text-lg font-black text-safari-orange">0</span>
+                    <span>Bambini</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- WISHES / GUESTBOOK SECTION -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-safari-gold/40">
+            <div class="text-center mb-6">
+                <span class="text-4xl block mb-1">🎈</span>
+                <h3 class="heading-font text-2xl font-extrabold text-jungle-900">Bacheca degli Auguri</h3>
+                <p class="text-xs text-jungle-600 font-semibold">Lascia un dolce pensiero per il 1° compleanno di Giacomo!</p>
+            </div>
+
+            <!-- Add Wish Form -->
+            <form id="wish-form" onsubmit="handleWishSubmit(event)" class="space-y-3 mb-6 bg-safari-cream/90 p-4 rounded-2xl border border-safari-gold/50">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <input type="text" id="wish-author" required placeholder="Il tuo nome"
+                           class="sm:col-span-2 px-3 py-2.5 text-xs sm:text-sm rounded-xl border border-jungle-300 focus:outline-none focus:border-jungle-600 font-medium">
+                    <select id="wish-emoji" class="px-3 py-2.5 text-xs sm:text-sm rounded-xl border border-jungle-300 bg-white font-medium focus:outline-none">
+                        <option value="🦁">🦁 Leone</option>
+                        <option value="🐒">🐒 Scimmietta</option>
+                        <option value="🦒">🦒 Giraffa</option>
+                        <option value="🐘">🐘 Elefante</option>
+                        <option value="🐯">🐯 Tigro</option>
+                        <option value="🎂">🎂 Torta</option>
+                    </select>
+                </div>
+                <textarea id="wish-message" required rows="2" placeholder="Scrivi il tuo messaggio di auguri per Giacomo..."
+                          class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-jungle-300 focus:outline-none focus:border-jungle-600 font-medium"></textarea>
+                <button type="submit" class="w-full py-2.5 bg-safari-orange hover:bg-orange-600 text-white font-bold text-xs sm:text-sm rounded-xl shadow transition transform active:scale-95 flex items-center justify-center gap-2">
+                    <span>✨</span>
+                    <span>Pubblica il tuo augurio</span>
+                </button>
+            </form>
+
+            <!-- Wishes List Container -->
+            <div id="wishes-list" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                <div class="text-center py-6 text-xs text-jungle-600 font-medium">
+                    Caricamento messaggi d'auguri... 🐾
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-6 text-xs text-jungle-800 space-y-1 font-medium opacity-80">
+            <p>🎉 Non vediamo l'ora di festeggiare insieme a Palermo! 🎉</p>
+            <p>1° Compleanno di Giacomo • 10 Gennaio 2027</p>
+        </footer>
+
+    </main>
+
+    <!-- MODAL: ADD TO CALENDAR -->
+    <div id="cal-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl relative">
+            <button onclick="closeCalendarModal()" class="absolute top-4 right-4 text-gray-500 font-bold text-xl hover:text-gray-800">✕</button>
+            <div class="text-4xl">📅</div>
+            <h4 class="heading-font text-xl font-bold text-jungle-900">Salva l'evento</h4>
+            <p class="text-xs text-jungle-700 font-semibold">Aggiungi il compleanno al tuo calendario!</p>
+            
+            <div class="space-y-2 pt-2">
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=1%C2%B0+Compleanno+di+Giacomo+%F0%9F%A6%81&dates=20270110T150000Z/20270110T183000Z&details=Festa+di+compleanno+di+Giacomo!+Tema+Giungla.+Location+Palermo.&location=Palermo"
+                   target="_blank" rel="noopener noreferrer"
+                   class="block w-full py-3 bg-blue-600 text-white font-bold text-xs sm:text-sm rounded-2xl shadow hover:bg-blue-700">
+                    Aggiungi a Google Calendar
+                </a>
+                <button onclick="downloadICSFile()"
+                        class="block w-full py-3 bg-jungle-700 text-white font-bold text-xs sm:text-sm rounded-2xl shadow hover:bg-jungle-800">
+                    Scarica File iCal (.ics)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SUCCESS TOAST -->
+    <div id="toast-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl relative border-4 border-safari-gold">
+            <div id="toast-icon" class="text-5xl">🎉</div>
+            <h4 id="toast-title" class="heading-font text-2xl font-bold text-jungle-900">Grazie!</h4>
+            <p id="toast-message" class="text-xs sm:text-sm text-jungle-700 font-semibold">La tua risposta è stata registrata con successo.</p>
+            <button onclick="closeToastModal()" class="w-full py-3 bg-jungle-800 text-white font-bold text-xs sm:text-sm rounded-2xl shadow hover:bg-jungle-900">
+                Evviva! 🦁
+            </button>
+        </div>
+    </div>
+
+    <!-- FIREBASE & CORE APPLICATION LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'giacomo-1st-birthday-palermo';
+        let db = null;
+        let auth = null;
+        let isFirebaseActive = false;
+
+        // In-memory Fallback Stores
+        let localRSVPs = [];
+        let localWishes = [
+            { id: '1', author: 'Zia Sara e Zio Luca', message: 'Tanti auguri al leoncino più bello di Palermo! 🦁❤️', emoji: '🦁', timestamp: Date.now() - 3600000 },
+            { id: '2', author: 'Nonna Maria', message: '1 anno di pura gioia! Non vediamo l\'ora di festeggiare Giacomo!', emoji: '🎂', timestamp: Date.now() - 7200000 }
+        ];
+
+        async function initFirebase() {
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    isFirebaseActive = true;
+                    subscribeRealtimeData();
+                } else {
+                    renderLocalState();
+                }
+            } catch (err) {
+                console.warn("Firebase fallback active:", err);
+                renderLocalState();
+            }
+        }
+
+        function getCollectionRef(colName) {
+            return collection(db, 'artifacts', appId, 'public', 'data', colName);
+        }
+
+        function subscribeRealtimeData() {
+            if (!isFirebaseActive || !db) return;
+
+            onSnapshot(getCollectionRef('rsvps'), (snapshot) => {
+                const rsvps = [];
+                snapshot.forEach(doc => rsvps.push({ id: doc.id, ...doc.data() }));
+                updateRSVPStats(rsvps);
+            }, (err) => console.error(err));
+
+            onSnapshot(getCollectionRef('wishes'), (snapshot) => {
+                const wishes = [];
+                snapshot.forEach(doc => wishes.push({ id: doc.id, ...doc.data() }));
+                wishes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderWishes(wishes);
+            }, (err) => console.error(err));
+        }
+
+        function renderLocalState() {
+            updateRSVPStats(localRSVPs);
+            renderWishes(localWishes);
+        }
+
+        window.handleRSVPSubmit = async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('rsvp-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Invio in corso...";
+
+            const name = document.getElementById('rsvp-name').value.trim();
+            const status = document.querySelector('input[name="rsvp-status"]:checked').value;
+            const adults = parseInt(document.getElementById('count-adults').value) || 0;
+            const kids = parseInt(document.getElementById('count-kids').value) || 0;
+            const notes = document.getElementById('rsvp-notes').value.trim();
+
+            const rsvpData = {
+                name,
+                status,
+                adults: status === 'attending' ? adults : 0,
+                kids: status === 'attending' ? kids : 0,
+                notes,
+                city: 'Palermo',
+                timestamp: Date.now()
+            };
+
+            try {
+                if (isFirebaseActive && db) {
+                    await addDoc(getCollectionRef('rsvps'), rsvpData);
+                } else {
+                    localRSVPs.push(rsvpData);
+                    renderLocalState();
+                }
+
+                fireConfetti();
+
+                showToast(
+                    status === 'attending' ? '🎉 EVVIVA!' : '❤️ GRAZIE!',
+                    status === 'attending' 
+                        ? `Grazie ${name}! Ti comunicheremo la location esatta a Palermo non appena definita!`
+                        : `Grazie per averci avvisato ${name}, ci mancherai alla festa!`
+                );
+
+                document.getElementById('rsvp-form').reset();
+                document.getElementById('count-adults').value = "1";
+                document.getElementById('count-kids').value = "0";
+            } catch (err) {
+                console.error("Error saving RSVP:", err);
+                showToast("Ops!", "Si è verificato un errore durante l'invio. Riprova più tardi.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>🚀</span><span>Invia la tua risposta</span>`;
+            }
+        };
+
+        window.handleWishSubmit = async function(e) {
+            e.preventDefault();
+            const author = document.getElementById('wish-author').value.trim();
+            const emoji = document.getElementById('wish-emoji').value;
+            const message = document.getElementById('wish-message').value.trim();
+
+            const wishData = { author, emoji, message, timestamp: Date.now() };
+
+            try {
+                if (isFirebaseActive && db) {
+                    await addDoc(getCollectionRef('wishes'), wishData);
+                } else {
+                    localWishes.unshift(wishData);
+                    renderLocalState();
+                }
+
+                fireConfetti();
+                document.getElementById('wish-form').reset();
+            } catch (err) {
+                console.error("Error saving wish:", err);
+            }
+        };
+
+        window.addEventListener('load', () => {
+            initFirebase();
+        });
+    </script>
+
+    <!-- GENERAL FRONTEND CONTROLLERS -->
+    <script>
+        // ENVELOPE ANIMATION OPENER
+        let envelopeOpened = false;
+        function openEnvelopeAnimation() {
+            if (envelopeOpened) return;
+            envelopeOpened = true;
+
+            const envelopeBox = document.getElementById('envelope-box');
+            const envelopeScreen = document.getElementById('envelope-screen');
+
+            // Trigger envelope opening classes
+            envelopeBox.classList.add('open');
+            fireConfetti();
+
+            // Smoothly fade out envelope screen overlay
+            setTimeout(() => {
+                envelopeScreen.style.opacity = '0';
+                envelopeScreen.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    envelopeScreen.style.display = 'none';
+                }, 800);
+            }, 1200);
+        }
+
+        // COUNTDOWN TIMER (10 Jan 2027 16:00:00)
+        const targetDate = new Date("January 10, 2027 16:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                document.getElementById("countdown").innerHTML = `<div class="col-span-4 p-4 bg-safari-gold text-jungle-900 rounded-2xl font-bold text-base">La Festa a Palermo è Iniziata! 🥳🦁</div>`;
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("cd-days").innerText = String(days).padStart(2, '0');
+            document.getElementById("cd-hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("cd-minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("cd-seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // RSVP STATS & RENDERERS
+        function updateRSVPStats(rsvps) {
+            let totalResponses = rsvps.length;
+            let totalAdults = 0;
+            let totalKids = 0;
+
+            rsvps.forEach(r => {
+                if (r.status === 'attending') {
+                    totalAdults += (parseInt(r.adults) || 0);
+                    totalKids += (parseInt(r.kids) || 0);
+                }
+            });
+
+            document.getElementById('stat-rsvps').innerText = totalResponses;
+            document.getElementById('stat-adults').innerText = totalAdults;
+            document.getElementById('stat-kids').innerText = totalKids;
+        }
+
+        function renderWishes(wishes) {
+            const listEl = document.getElementById('wishes-list');
+            if (!wishes || wishes.length === 0) {
+                listEl.innerHTML = `<div class="text-center py-4 text-xs text-jungle-600 font-medium">Ancora nessun augurio. Sii il primo a lasciarne uno! 🎈</div>`;
+                return;
+            }
+
+            listEl.innerHTML = wishes.map(w => `
+                <div class="bg-white/90 p-3.5 rounded-2xl border border-jungle-200/80 shadow-sm flex items-start gap-3">
+                    <span class="text-3xl p-1.5 bg-safari-sand rounded-xl">${w.emoji || '🦁'}</span>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-2">
+                            <h5 class="font-bold text-xs sm:text-sm text-jungle-900 truncate">${escapeHTML(w.author)}</h5>
+                            <span class="text-[10px] text-jungle-500 font-medium">${formatDate(w.timestamp)}</span>
+                        </div>
+                        <p class="text-xs text-jungle-800 font-medium mt-0.5 leading-relaxed">${escapeHTML(w.message)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'Recente';
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' });
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        function adjustCount(type, delta) {
+            const input = document.getElementById(`count-${type}`);
+            let val = parseInt(input.value) || 0;
+            const min = type === 'adults' ? 1 : 0;
+            val = Math.max(min, Math.min(10, val + delta));
+            input.value = val;
+        }
+
+        function toggleGuestCounters(show) {
+            const box = document.getElementById('guests-counter-box');
+            const lblAtt = document.getElementById('label-attending');
+            const lblDec = document.getElementById('label-declined');
+
+            if (show) {
+                box.classList.remove('hidden');
+                lblAtt.className = "flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-emerald-400 bg-emerald-50 cursor-pointer font-bold text-xs sm:text-sm text-emerald-800 transition active:scale-95";
+                lblDec.className = "flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-gray-200 bg-gray-50 cursor-pointer font-bold text-xs sm:text-sm text-gray-600 transition active:scale-95";
+            } else {
+                box.classList.add('hidden');
+                lblAtt.className = "flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-gray-200 bg-gray-50 cursor-pointer font-bold text-xs sm:text-sm text-gray-600 transition active:scale-95";
+                lblDec.className = "flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-rose-400 bg-rose-50 cursor-pointer font-bold text-xs sm:text-sm text-rose-800 transition active:scale-95";
+            }
+        }
+
+        function fireConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#15803d', '#FFB703', '#FB8500', '#D4A373', '#ffffff']
+                });
+            }
+        }
+
+        function openCalendarModal() {
+            document.getElementById('cal-modal').classList.remove('hidden');
+            document.getElementById('cal-modal').classList.add('flex');
+        }
+
+        function closeCalendarModal() {
+            document.getElementById('cal-modal').classList.add('hidden');
+            document.getElementById('cal-modal').classList.remove('flex');
+        }
+
+        function showToast(title, msg) {
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = msg;
+            document.getElementById('toast-modal').classList.remove('hidden');
+            document.getElementById('toast-modal').classList.add('flex');
+        }
+
+        function closeToastModal() {
+            document.getElementById('toast-modal').classList.add('hidden');
+            document.getElementById('toast-modal').classList.remove('flex');
+        }
+
+        function downloadICSFile() {
+            const icsData = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Giacomo 1st Birthday Invitation Palermo//IT
+BEGIN:VEVENT
+SUMMARY:1° Compleanno di Giacomo 🦁 (Palermo)
+DESCRIPTION:Festa di 1° compleanno di Giacomo a tema Giungla a Palermo!
+LOCATION:Palermo (Location in corso di definizione)
+DTSTART:20270110T150000Z
+DTEND:20270110T183000Z
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', '1_Compleanno_Giacomo_Palermo.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            closeCalendarModal();
+        }
+    </script>
+</body>
+</html>
